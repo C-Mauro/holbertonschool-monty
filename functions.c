@@ -22,13 +22,13 @@ void push(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	new->prev = NULL;
-	new->n = n;
-	new->next = *stack;
+	newnode->prev = NULL;
+	newnode->n = n;
+	newnode->next = *stack;
 
 	if (*stack)
 		tmp->prev = NULL;
-	*stack = new;
+	*stack = newnode;
 
 }
 void pall(stack_t **stack, unsigned int line_number)
