@@ -7,10 +7,12 @@
  */
 int main(int argc, char *argv[])
 {
+	void(*f)(stack_t, **stack, unsigned int line_num);
 	FILE *file;
 	char *buf = NULL;
 	size_t bufsize = 0;
-
+	stack_t *stack = NULL;
+	int i;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -25,6 +27,8 @@ int main(int argc, char *argv[])
 	}
 
 	while (getline(&buf, &bufsize, file) != -1)
+	{
+		opc = strtock(buf, " \t\n");
 
 
 	return (EXIT_SUCCESS);
