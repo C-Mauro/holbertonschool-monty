@@ -1,5 +1,4 @@
 #include "monty.h"
-#include <stdlib.h>
 /**
  *
  */
@@ -9,37 +8,37 @@ void swap(stack_t **stack, unsigned int line_number)
 	stack_t *temp = *stack;
 	int t;
 
-
-	if (stack == NULL || temp->next == NULL)
+	if ((*stack) == NULL)
+	{
+		fprintf(stderr, "L%u: can't swap, stack too short", line_number);
+		exit(EXIT_FAILURE);
+	}
+	while(temp->next)
+		temp = temp->next;
+	if(temp->prev == NULL)
 	{
 		fprintf(stderr, "L%u: can't swap, stack too short", line_number);
 		exit(EXIT_FAILURE);
 	}
 	t = temp->n;
-	temp->n = temp->next->n;
-	temp->next->n = t;
-	
-
+	temp->n = temp->prev->n;
+	temp->prev->n = t;
 }
 
 void add(stack_t **stack, unsigned int line_number)
 {
-	stack_t *temp = *stack; 
+	stack_t *node = *stack; 
 
-	if (!(*stack) || !temp->next)
+	if (!(*stack) || !node->next)
 
 		fprintf(stderr, "L%u: can't add, stack too short", line_number);
 	exit(EXIT_FAILURE);
 
-	while (temp->next->next)
-	{
-		temp = temp->next;
-		temp->n = temp->next->n;
-		temp->n += temp->next->n;
-
-		
+	while (node->next->next)
+	
+		node = node->next;
+	node->n += node->next->n;
 	pop(stack, line_number);
-	}
 
 
 }
