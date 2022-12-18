@@ -1,5 +1,8 @@
+#include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include <stddef.h>
+#include <stdlib.h>
 #ifndef MONTY_H
 #define MONTY_H
 
@@ -33,8 +36,7 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-
-void get_opcode(char *token, stack_t **stack, unsigned int line_number);
+/*void get_opcode(char *token, stack_t **stack, unsigned int line_number);*/
 void malloc_error(void);
 void free_stack(stack_t **stack);
 void push(stack_t **stack, unsigned int line_number);
@@ -44,5 +46,6 @@ void pint(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+int isNumber(char s[]);
 
 #endif

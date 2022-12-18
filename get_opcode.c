@@ -4,7 +4,7 @@
 /**
  *
  */
-void get_opcode(char *token, stack_t **stack, unsigned int line_number)
+void (*get_opcode(char *token))(stack_t **stack, unsigned int line_number)
 {
 	unsigned int i = 0;
 
@@ -21,26 +21,52 @@ void get_opcode(char *token, stack_t **stack, unsigned int line_number)
 
 	while (ops[i].opcode)
 	{
-		if (strcmp(ops[i].opcode, token) == 0)
+		if (strcmp(token, ops[i].opcode) == 0)
 		{
-			(ops[i].f(stack, line_number));
+			return (ops[i].f);
+			i++;
 		}
-		i++;
+		
 	}
-
-	exit(EXIT_FAILURE);
+	return (ops[i].f);
+	
 }
-void free_stack(stack_t **stack)
+/**
+ * main - main function
+ * @argc: Number of arguments
+ * @argv: Array of arguments
+ *
+ * Return: 0
+ */
+int main(int argc, char **argv)
 {
-	stack_t *temp = NULL;
+        FILE *file = NULL;
+        char *buffer = NULL, *token= NULL;
+        size_t bufsize = 0;
+	int i = 0;
+        stack_t *stack = NULL;
+        void (*f)(stack_t **stack, unsigned int line_num);
 
-        if (stack == NULL || *stack == NULL)
-                return;
-
-        while (*stack != NULL)
+        if (argc != 2)
+                fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
+        file = fopen(argv[1], "r");
+        if (!file)
+                fprintf(stderr, "Error: Can't open file %s\n", argv[1]), exit(EXIT_FAILURE);
+        while (getline(&buffer, &bufsize, file) != -1)
         {
-                temp = (*stack)->next;
-                free(*stack);
-                *stack = temp;
+                i++;
+                token = strtok(buffer, " \t\n");
+                if (!token || strcmp(token, "nop") == 0 || strcmp(token, "\n") == 0)
+                        continue;
+                f = get_opcode(token);
+                if (!f)
+                {
+                        fprintf(stderr, "L%u: unknown instruction %s\n", i, token);
+                        exit(EXIT_FAILURE);
+                }
+                f(&stack, i);
         }
+        free(buffer);
+        fclose(file);
+        return (0);
 }
