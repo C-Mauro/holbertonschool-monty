@@ -1,13 +1,14 @@
 #include "monty.h"
 
 /**
- * pall - prints stack values 
+ * pall - prints stack values
  * @stack: doubly linked list
  * @line_number: number of the current line.
  */
 void pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
 	stack_t *tmp;
+
 	tmp = *stack;
 
 	if (*stack == NULL)
@@ -29,6 +30,7 @@ void pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 void pint(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp;
+
 	tmp = *stack;
 
 	if (*stack == NULL)
@@ -48,6 +50,7 @@ void pint(stack_t **stack, unsigned int line_number)
 void pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *newnode, *remove;
+
 	newnode = *stack;
 
 	if (*stack == NULL || stack == NULL)

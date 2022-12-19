@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * swap - prints top stack value 
+ * swap - prints top stack value
  * @stack: double linked list
  * @line_number: number of current line
  */
@@ -28,7 +28,7 @@ void swap(stack_t **stack, unsigned int line_number)
 }
 /**
  * add - prints the top value of the stack.
- * @stack: double linked list 
+ * @stack: double linked list
  * @line_number: number of current line
  */
 void add(stack_t **stack, unsigned int line_number)
@@ -53,32 +53,32 @@ void add(stack_t **stack, unsigned int line_number)
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-        stack_t *newnode = NULL, *tmp = *stack;
-        int number = 0;
-        char *str = NULL;
+	stack_t *newnode = NULL, *tmp = *stack;
+	int number = 0;
+	char *str = NULL;
 
-        str = strtok(NULL, " \t\n");
-        if (str == NULL || str_number(str) == 0)
-        {
-                fprintf(stderr, "L%u: usage: push integer\n", line_number);
-                exit(EXIT_FAILURE);
-        }
-        number = atoi(str);
-        newnode = malloc(sizeof(stack_t));
-        if (!newnode)
-                return;
-        newnode->n = number;
-        newnode->next = NULL;
-        if (tmp)
-        {
-                while (tmp->next)
-                        tmp = tmp->next;
-                newnode->prev = tmp;
-                tmp->next = newnode;
-        }
-        else
-        {
-                *stack = newnode;
-                newnode->prev = NULL;
-        }
+	str = strtok(NULL, " \t\n");
+	if (str == NULL || str_number(str) == 0)
+	{
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	number = atoi(str);
+	newnode = malloc(sizeof(stack_t));
+	if (!newnode)
+		return;
+	newnode->n = number;
+	newnode->next = NULL;
+	if (tmp)
+	{
+		while (tmp->next)
+		tmp = tmp->next;
+		newnode->prev = tmp;
+		tmp->next = newnode;
+	}
+	else
+	{
+		*stack = newnode;
+		newnode->prev = NULL;
+	}
 }

@@ -1,9 +1,9 @@
 #include "monty.h"
 /**
- * getopc - Gets the opcode function needed.
- * @opc: Opcode name
+ * get_opcode - get opcode function
+ * @token: name
  *
- * Return: The function of the given opcode or NULL.
+ * Return: the function or NULL.
  */
 void (*get_opcode(char *token))(stack_t **stack, unsigned int line_number)
 {
@@ -18,7 +18,7 @@ void (*get_opcode(char *token))(stack_t **stack, unsigned int line_number)
 		{NULL, NULL},
 	};
 
-	for(i = 0; ops[i].opcode; i++)
+	for (i = 0; ops[i].opcode; i++)
 	{
 		if (strcmp(token, ops[i].opcode) == 0)
 			return (ops[i].f);
