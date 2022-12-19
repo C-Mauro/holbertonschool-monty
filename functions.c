@@ -1,108 +1,69 @@
 #include "monty.h"
-#include <stdlib.h>
-/**int number;
- *
+
+/**
+ * pall - prints stack values 
+ * @stack: doubly linked list
+ * @line_number: number of the current line.
  */
-void push(stack_t **stack, unsigned int line_number)
+void pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 {
-
-	stack_t *newnode = NULL, *tmp = *stack;
-	char *str = NULL;
-	int number = 0;
-
-	if (stack == NULL)
-	{
-		fprintf(stderr, "L%d: stack not found\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	str = strtok(NULL, " \t\n");
-	if (!str || str_number(str) == 0)
-	{
-		fprintf(stderr,"L%u: Usage: push integer", line_number);
-		exit(EXIT_FAILURE);
-	}
-	number = atoi(str);
-	newnode = malloc(sizeof(stack_t));
-	if (newnode == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		free_stack(stack);
-		exit(EXIT_FAILURE);
-	}
-
-	newnode->n = number;
-	newnode->next = NULL;
-
-	if (tmp)
-	{
-		while(tmp->next)
-		{	
-			tmp = tmp->next;
-		newnode->prev = tmp;
-		tmp->next = newnode;
-		}
-	}
-	else 
-	{
-		*stack = newnode;
-	}	newnode->prev = NULL;
-}
-void pall(stack_t **stack, __attribute__((unused))unsigned int line_number)
-{
-        stack_t *node;
-	 node = *stack;
+	stack_t *tmp;
+	tmp = *stack;
 
 	if (*stack == NULL)
 		return;
 
-	while(node->next)
+	while (tmp->next)
+		tmp = tmp->next;
+	while (tmp)
 	{
-		node = node->next;
-	} 
-        while(node)
-        {
-               printf("%d\n", node->n);
-                node = node->next;
-        }
+		printf("%d\n", tmp->n);
+		tmp = tmp->prev;
+	}
 }
-
+/**
+ * pint - prints top value of  stack.
+ * @stack: doubly linked list
+ * @line_number: number of the current line.
+ */
 void pint(stack_t **stack, unsigned int line_number)
 {
-	stack_t *temp = *stack;
+	stack_t *tmp;
+	tmp = *stack;
 
-	if (stack == NULL)
+	if (*stack == NULL)
 	{
-		fprintf(stderr, " L%u: can't pint, stack empty", line_number);
+		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	while (temp->next)
-	{
-		temp = temp->next;
-		printf("%d\n", temp->n);
-	}
-
+	while (tmp->next)
+		tmp = tmp->next;
+	printf("%d\n", tmp->n);
 }
-
+/**
+ * pop - deletes the current top of stack
+ * @stack: doubly linked list
+ * @line_number: number of the current line.
+ */
 void pop(stack_t **stack, unsigned int line_number)
 {
-	stack_t *temp = *stack, *remove;
+	stack_t *newnode, *remove;
+	newnode = *stack;
 
-	if (stack == NULL || *stack == NULL)
+	if (*stack == NULL || stack == NULL)
 	{
-		fprintf(stderr, "L%u: can't pop an empty stack", line_number);
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	if(!temp->next)
+	if (newnode->next == NULL)
 	{
+		free(newnode);
 		*stack = NULL;
-		free(temp);
 	}
 	else
-	
-		while(temp->next->next)
-			temp = temp->next;
-	remove = temp->next;
-	temp->next = NULL;
+		while (newnode->next->next)
+			newnode = newnode->next;
+	remove = newnode->next;
+	newnode->next = NULL;
 	free(remove);
-	
 }
